@@ -24,6 +24,11 @@ public class RestApiConnectController {
         return restTemplate;
     }
 
+    @GetMapping(path={"/api/HealthCheck", "/api/healthCheck", "/api/healthcheck"})
+    public String healthCheck() {
+        return "true";
+    }
+
     @GetMapping("/teste/restapi")
     public String testeRestApi(
             @RequestParam(
