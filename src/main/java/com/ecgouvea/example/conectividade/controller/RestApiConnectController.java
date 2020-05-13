@@ -33,7 +33,9 @@ public class RestApiConnectController {
     }
 
     @GetMapping(path="/variaveis-ambiente")
-    public String listarVariaveisAmbiente() {
+    public String listarVariaveisAmbiente(
+            @RequestParam(required = false, defaultValue = "<br>") String lineTermination
+    ) {
         StringBuilder values = new StringBuilder();
         Map<String, String> env = System.getenv();
 
@@ -43,7 +45,7 @@ public class RestApiConnectController {
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                                 (oldValue, newValue) -> oldValue, LinkedHashMap::new));
 
-        collect.forEach((k, v) -> values.append(k + "=" + v + "<br>"));
+        collect.forEach((k, v) -> values.append(k + "=" + v + lineTermination));
         return values.toString();
     }
 
