@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class RestApiConnectController {
@@ -27,6 +30,21 @@ public class RestApiConnectController {
     @GetMapping(path={"/api/HealthCheck", "/api/healthCheck", "/api/healthcheck"})
     public String healthCheck() {
         return "true";
+    }
+
+    @GetMapping(path="/variaveis-ambiente")
+    public String listarVariaveisAmbiente() {
+        StringBuilder values = new StringBuilder();
+        Map<String, String> env = System.getenv();
+
+        LinkedHashMap<String, String> collect =
+                env.entrySet().stream()
+                        .sorted(Map.Entry.comparingByKey())
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                                (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+
+        collect.forEach((k, v) -> values.append(k + "=" + v + "<br>"));
+        return values.toString();
     }
 
     @GetMapping("/teste/restapi")
