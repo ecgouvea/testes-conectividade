@@ -55,7 +55,7 @@ public class DatabaseConnectController {
         String result = "";
         String values = "";
         String connectionUrl =
-                "jdbc:sqlserver://" + host +"\\" + instance + ";"
+                "jdbc:sqlserver://" + host + "\\" + instance + ";"
                         + "database=DBO_CRE;"
                         + "user=userIntegraBematech;"
                         + "password=userintegrabematech;"
