@@ -20,6 +20,7 @@ public class SocketConnectController {
             @RequestParam(required = false) Integer port
     ) throws Exception {
         String values = "";
+        String s = null;
 
         try (
                 Socket clientSocket = new Socket(host, port);
@@ -27,7 +28,13 @@ public class SocketConnectController {
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         ) {
            clientSocket.setSoTimeout(30000);
-           values = "Connected. Read line: " + in.readLine();
+           values = "Connected. Read line: ";
+           char[] cbuf = new char[64];
+           while (in.read(cbuf) > 0) {
+               s = String.valueOf(cbuf);
+               System.out.println(s);
+               values += s;
+           }
         } catch (Exception e) {
             e.printStackTrace();
             values = e.getMessage();
