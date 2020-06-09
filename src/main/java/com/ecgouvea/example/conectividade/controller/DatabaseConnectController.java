@@ -48,13 +48,14 @@ public class DatabaseConnectController {
     @GetMapping("/teste/sqlserver")
     public String testeSqlServer(
             @RequestParam(required = false) String host,
+            @RequestParam(required = false) String instance,
             @RequestParam(required = false) String query,
             @RequestParam(required = false, defaultValue = "1") Integer columnIndex
     ) {
         String result = "";
         String values = "";
         String connectionUrl =
-                "jdbc:sqlserver://" + host +"\\HML_5;"
+                "jdbc:sqlserver://" + host +"\\" + instance + ";"
                         + "database=DBO_CRE;"
                         + "user=userIntegraBematech;"
                         + "password=userintegrabematech;"
