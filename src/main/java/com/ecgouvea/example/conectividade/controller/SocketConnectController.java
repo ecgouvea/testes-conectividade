@@ -26,7 +26,8 @@ public class SocketConnectController {
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         ) {
-           values = in.readLine();
+           clientSocket.setSoTimeout(30000);
+           values = "Connected. Read line: " + in.readLine();
         } catch (Exception e) {
             e.printStackTrace();
             values = e.getMessage();
