@@ -17,6 +17,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'org.postgresql:postgresql'
 	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:6.2.2.jre8'
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc8:19.6.0.0'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

@@ -2,11 +2,20 @@ package com.ecgouvea.example.conectividade.controller;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PreDestroy;
 import java.sql.*;
 import java.util.Date;
 
 @RestController
 public class DatabaseConnectController {
+
+    private Connection oracleConn = null;
+
+    public DatabaseConnectController() throws SQLException {
+        String url = "jdbc:oracle:thin:@//efbrmtzvlx216.ultra.corp:1522/EFPDVD.ULTRA.CORP?user=dbcsi_p2k&password=dbcsi_p2k";
+        this.oracleConn = DriverManager.getConnection(url);
+        System.out.printf("\n\n\n\n\n [%s] Construtor this.oracleConn \n\n\n\n\n ", new Date().toString());
+    }
 
     @GetMapping("/teste/postgresql")
     public String testePostgreSQL(@RequestParam(required = false) String connectionString,
@@ -81,5 +90,61 @@ public class DatabaseConnectController {
         }
 
         return result;
+    }
+
+
+    @GetMapping("/teste/oracle")
+    public String testeOracle(@RequestParam(required = false) String connectionString,
+                                  @RequestParam(required = false) String sqlQuery,
+                                  @RequestParam(required = false, defaultValue = "1") Integer columnIndex
+    ) throws Exception {
+        //String url = "jdbc:postgresql://dev-simuladortributario.ctabjq8ajjko.us-east-1.rds.amazonaws.com:5432/simuladortributario?user=simtribRoot12&password=123Mudar12";
+        String url = null;
+        String sql = "* from dual";
+        String values = "";
+
+        if (connectionString != null) {
+            url = connectionString;
+        } else {
+            url = "jdbc:oracle:thin:@//efbrmtzvlx216.ultra.corp:1522/EFPDVD.ULTRA.CORP?user=dbcsi_p2k&password=dbcsi_p2k";
+        }
+
+        if (sqlQuery != null) {
+            sql = sqlQuery;
+        }
+
+        System.out.printf("\n\n\n\n\n [%s] this.oracleConn == null? \n\n\n\n\n ", new Date().toString());
+        if (this.oracleConn == null) {
+            System.out.printf("\n\n\n\n\n [%s] this.oracleConn == null: true \n\n\n\n\n ", new Date().toString());
+            this.oracleConn = DriverManager.getConnection(url);
+        } else {
+            System.out.printf("\n\n\n\n\n [%s] this.oracleConn == null: false \n\n\n\n\n ", new Date().toString());
+        }
+
+        try (
+                PreparedStatement stmt = this.oracleConn.prepareStatement("SELECT " + sql);
+                ResultSet rs = stmt.executeQuery()
+        ) {
+            while (rs.next()) {
+                values += rs.getString(columnIndex) + "<br>";
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            values = e.getMessage();
+        }
+
+        return new Date().toString() + "<br>Result:<br>" + values;
+    }
+
+
+    @PreDestroy
+    public void destroy() {
+        System.out.printf(
+                "\n\n\n\n\n\n\n\n [%s] Callback triggered - @PreDestroy. \n\n\n\n\n\n\n\n", new Date().toString());
+        try {
+            this.oracleConn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
