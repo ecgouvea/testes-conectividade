@@ -12,7 +12,7 @@ public class DatabaseConnectController {
     private Connection oracleConn = null;
 
     public DatabaseConnectController() throws SQLException {
-        String url = "jdbc:oracle:thin:@//efbrmtzvlx216.ultra.corp:1522/EFPDVD.ULTRA.CORP?user=dbcsi_p2k&password=dbcsi_p2k";
+        String url = "jdbc:oracle:thin:@//myhost:1522/SERVICENAME.CORP?user=user&password=pwd";
         this.oracleConn = DriverManager.getConnection(url);
         System.out.printf("\n\n\n\n\n [%s] Construtor this.oracleConn \n\n\n\n\n ", new Date().toString());
     }
@@ -22,7 +22,7 @@ public class DatabaseConnectController {
                         @RequestParam(required = false) String sqlQuery,
                         @RequestParam(required = false, defaultValue = "1") Integer columnIndex
     ) throws Exception {
-        //String url = "jdbc:postgresql://dev-simuladortributario.ctabjq8ajjko.us-east-1.rds.amazonaws.com:5432/simuladortributario?user=simtribRoot12&password=123Mudar12";
+        //String url = "jdbc:postgresql://myrds.us-east-1.rds.amazonaws.com:5432/myrds?user=user&password=pwd";
         String url = null;
         String sql = "* from public.tabela_teste";
         String values = "";
@@ -30,7 +30,7 @@ public class DatabaseConnectController {
         if (connectionString != null) {
             url = connectionString;
         } else {
-            url = "jdbc:postgresql://localhost:15432/simuladortributario?user=simtribRoot12&password=123Mudar12";
+            url = "jdbc:postgresql://localhost:15432/myrds?user=user&password=pwd";
         }
 
         if (sqlQuery != null) {
@@ -65,9 +65,9 @@ public class DatabaseConnectController {
         String values = "";
         String connectionUrl =
                 "jdbc:sqlserver://" + host + "\\" + instance + ";"
-                        + "database=DBO_CRE;"
-                        + "user=userIntegraBematech;"
-                        + "password=userintegrabematech;"
+                        + "database=DBO_MYDBO;"
+                        + "user=user;"
+                        + "password=pwd;"
                         + "loginTimeout=30;";
 
         try (
@@ -98,7 +98,7 @@ public class DatabaseConnectController {
                                   @RequestParam(required = false) String sqlQuery,
                                   @RequestParam(required = false, defaultValue = "1") Integer columnIndex
     ) throws Exception {
-        //String url = "jdbc:postgresql://dev-simuladortributario.ctabjq8ajjko.us-east-1.rds.amazonaws.com:5432/simuladortributario?user=simtribRoot12&password=123Mudar12";
+        //String url = "jdbc:postgresql://myrds.us-east-1.rds.amazonaws.com:5432/myrds?user=user&password=pwd";
         String url = null;
         String sql = "* from dual";
         String values = "";
@@ -106,7 +106,7 @@ public class DatabaseConnectController {
         if (connectionString != null) {
             url = connectionString;
         } else {
-            url = "jdbc:oracle:thin:@//efbrmtzvlx216.ultra.corp:1522/EFPDVD.ULTRA.CORP?user=dbcsi_p2k&password=dbcsi_p2k";
+            url = "jdbc:oracle:thin:@//myhost:1522/SERVICENAME.CORP?user=user&password=pwd";
         }
 
         if (sqlQuery != null) {
