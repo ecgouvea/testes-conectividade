@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Date;
 
 @RestController
@@ -52,5 +58,29 @@ public class RestApiConnectController {
 
         return new Date().toString() + "<br>Result:<br>" + values;
     }
-    
+
+    @GetMapping("/teste/getfile")
+    public String testeRestApiGetFile(
+            @RequestParam(
+                    required = false,
+                    defaultValue = "https://<mydomain-myorigin>.cloudfront.net/<my file>"
+            ) String url
+    ) throws Exception {
+        log.info("Chamando URL: " + url);
+
+        HttpHeaders headers = new HttpHeaders();
+        //headers.set("User-Agent", "curl/7.49.0");
+        URLConnection urlConnection = new URL(url).openConnection();
+        urlConnection.setRequestProperty ("Authorization", "Basic <your user:pwd base64 here>");
+
+        InputStream in = urlConnection.getInputStream();
+        char[] buf = new char[1024];
+        try (InputStreamReader inputStreamReader = new InputStreamReader(in)) {
+          while (inputStreamReader.read(buf) > 0) {
+              System.out.println(buf);
+          }
+        }
+
+        return new Date().toString() + "<br>Result:<br>";
+    }
 }

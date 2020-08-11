@@ -1,13 +1,14 @@
 package com.ecgouvea.example.conectividade;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import static org.springframework.boot.SpringApplication.run;
 
 @SpringBootApplication
 public class TestesConectividadeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TestesConectividadeApplication.class, args);
+		run(TestesConectividadeApplication.class, args);
 	}
 
 }
