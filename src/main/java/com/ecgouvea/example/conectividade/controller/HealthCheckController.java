@@ -14,6 +14,7 @@ public class HealthCheckController {
 
     @GetMapping(path={"/api/HealthCheck", "/api/healthCheck", "/api/healthcheck", "/api/health"})
     public String healthCheck() {
+        System.out.println("Something has to go into log!");
         return "true";
     }
 

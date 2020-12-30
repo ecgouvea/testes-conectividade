@@ -13,7 +13,7 @@ public class DatabaseConnectController {
 
     public DatabaseConnectController() throws SQLException {
         String url = "jdbc:oracle:thin:@//myhost:1522/SERVICENAME.CORP?user=user&password=pwd";
-        this.oracleConn = DriverManager.getConnection(url);
+        // this.oracleConn = DriverManager.getConnection(url);
         System.out.printf("\n\n\n\n\n [%s] Construtor this.oracleConn \n\n\n\n\n ", new Date().toString());
     }
 
